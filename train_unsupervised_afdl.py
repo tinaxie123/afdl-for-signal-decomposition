@@ -97,18 +97,8 @@ def evaluate(model, val_loader, device):
 
 
 def main(args):
-    print("="*80)
-    print("Training Unsupervised AFDL (Rebuttal Experiment)")
-    print("="*80)
-    print("\nObjective: Prove Micro-NN Dictionary outperforms K-SVD WITHOUT supervision")
-    print(f"Target: SNR > 15.8 dB (K-SVD baseline)")
-    print(f"Best range: 16.0-17.0 dB\n")
-
-    # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
-
-    # Create dataloaders
     print(f"\nLoading PTB-ECG dataset from: {args.data_path}")
     train_loader, val_loader, test_loader = create_dataloaders(
         data_path=args.data_path,
