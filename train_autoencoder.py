@@ -93,17 +93,8 @@ def evaluate(model, val_loader, device):
 
 
 def main(args):
-    print("="*80)
-    print("Training 1D CNN Autoencoder Baseline")
-    print("="*80)
-    print("\nObjective: Modern deep learning baseline for comparison with AFDL")
-    print("This addresses Reviewer 190C's concern about broader comparisons\n")
-
-    # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
-
-    # Create dataloaders
     print(f"\nLoading PTB-ECG dataset from: {args.data_path}")
     train_loader, val_loader, test_loader = create_dataloaders(
         data_path=args.data_path,
@@ -116,8 +107,6 @@ def main(args):
     print(f"  Train batches: {len(train_loader)}")
     print(f"  Val batches: {len(val_loader)}")
     print(f"  Test batches: {len(test_loader)}")
-
-    # Create model
     print(f"\nCreating {'Deep ' if args.use_deep else ''}1D CNN Autoencoder...")
     if args.use_deep:
         model = DeepCNN1DAutoencoder(
@@ -137,27 +126,17 @@ def main(args):
 
     print(f"  Total parameters: {total_params:,}")
     print(f"  Trainable parameters: {trainable_params:,}")
-
-    # Optimizer
     optimizer = optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-5)
-
-    # Learning rate scheduler
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, mode='max', factor=0.5, patience=10
     )
 
-    # Training loop
-    print(f"\nStarting training for {args.num_epochs} epochs...")
-    print("="*80)
 
     best_snr = 0
     best_epoch = 0
 
     for epoch in range(1, args.num_epochs + 1):
-        # Train
         train_metrics = train_epoch(model, train_loader, optimizer, device, epoch)
-
-        # Evaluate
         if epoch % args.eval_every == 0:
             val_metrics = evaluate(model, val_loader, device)
 
@@ -165,13 +144,9 @@ def main(args):
             print(f"  Train Loss: {train_metrics['loss']:.4f}")
             print(f"  Val SNR: {val_metrics['snr']:.2f} dB")
             print(f"  Val PRD: {val_metrics['prd']:.2f}%")
-
-            # Check if this is the best model
             if val_metrics['snr'] > best_snr:
                 best_snr = val_metrics['snr']
                 best_epoch = epoch
-
-                # Save checkpoint
                 checkpoint_path = os.path.join(args.save_dir, 'autoencoder_best.pth')
                 torch.save({
                     'epoch': epoch,
@@ -181,18 +156,7 @@ def main(args):
                     'prd': val_metrics['prd'],
                 }, checkpoint_path)
                 print(f"  [BEST MODEL] Saved to {checkpoint_path}")
-
-            # Update learning rate
             scheduler.step(val_metrics['snr'])
-
-            print("="*80)
-
-    # Final evaluation on test set
-    print("\n" + "="*80)
-    print("Final Evaluation on Test Set")
-    print("="*80)
-
-    # Load best model
     checkpoint_path = os.path.join(args.save_dir, 'autoencoder_best.pth')
     if os.path.exists(checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location=device)
@@ -216,12 +180,6 @@ def main(args):
         print(f"\n[NOTE] Autoencoder has comparable or higher SNR")
         print(f"       However, AFDL offers superior interpretability through")
         print(f"       functional basis functions, which autoencoders lack")
-
-    print("\n" + "="*80)
-    print("Training Complete!")
-    print("="*80)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train 1D CNN Autoencoder Baseline')
 
