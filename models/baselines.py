@@ -230,49 +230,23 @@ class DWTDecomposer:
     def fit_transform(self, signals: np.ndarray) -> Tuple[np.ndarray, list]:
         return self.transform(signals)
 
-
-# ============================================================================
-# Convenience function for testing all baselines
-# ============================================================================
-
 def test_all_baselines(signals: np.ndarray):
-    """
-    Test all baseline methods on given signals
-
-    Args:
-        signals: Input signals [n_samples, signal_length]
-
-    Returns:
-        Dictionary with results from all methods
-    """
     results = {}
-
-    # K-SVD
-    print("Testing K-SVD...")
     ksvd = KSVDDecomposer(n_components=128)
     recon_ksvd, _ = ksvd.fit_transform(signals)
     mse_ksvd = np.mean((signals - recon_ksvd) ** 2)
     results['K-SVD'] = {'reconstruction': recon_ksvd, 'mse': mse_ksvd}
     print(f"  MSE: {mse_ksvd:.6f}")
-
-    # ICA
-    print("Testing ICA...")
     ica = ICADecomposer(n_components=128)
     recon_ica, _ = ica.fit_transform(signals)
     mse_ica = np.mean((signals - recon_ica) ** 2)
     results['ICA'] = {'reconstruction': recon_ica, 'mse': mse_ica}
     print(f"  MSE: {mse_ica:.6f}")
-
-    # NMF
-    print("Testing NMF...")
     nmf = NMFDecomposer(n_components=128)
     recon_nmf, _ = nmf.fit_transform(signals)
     mse_nmf = np.mean((signals - recon_nmf) ** 2)
     results['NMF'] = {'reconstruction': recon_nmf, 'mse': mse_nmf}
     print(f"  MSE: {mse_nmf:.6f}")
-
-    # DWT
-    print("Testing DWT...")
     dwt = DWTDecomposer(wavelet='db4', level=5)
     recon_dwt, _ = dwt.transform(signals)
     mse_dwt = np.mean((signals - recon_dwt) ** 2)
@@ -283,12 +257,6 @@ def test_all_baselines(signals: np.ndarray):
 
 
 if __name__ == '__main__':
-    print("=" * 80)
-    print("Testing Baseline Methods")
-    print("=" * 80)
-
-    # Generate synthetic ECG signals
-    np.random.seed(42)
     n_samples = 100
     signal_length = 3600
     t = np.linspace(0, 10, signal_length)
