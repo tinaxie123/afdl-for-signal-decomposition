@@ -1,9 +1,3 @@
-"""
-Training Script for AFDL Model
-
-Based on the ICASSP 2026 paper:
-"Beyond Static Bases: Adaptive Functional Dictionary Learning for Interpretable Signal Decomposition"
-"""
 
 import torch
 import torch.nn as nn
@@ -181,10 +175,6 @@ class AFDLTrainer:
 
     @torch.no_grad()
     def test(self) -> dict:
-        """Test the model"""
-        print("\n" + "="*80)
-        print("Testing model on test set...")
-        print("="*80)
 
         self.model.eval()
 
@@ -222,13 +212,7 @@ class AFDLTrainer:
         }
 
         print("\nTest Results:")
-        print("-" * 80)
-        print(f"SNR: {results['snr_mean']:.2f} ± {results['snr_std']:.2f} dB")
-        print(f"PRD: {results['prd_mean']:.2f} ± {results['prd_std']:.2f} %")
-        print(f"MSE: {results['mse_mean']:.4f}")
-        print(f"MAE: {results['mae_mean']:.4f}")
-        print("="*80)
-
+    
         return results
 
     def save_checkpoint(self, is_best: bool = False):
