@@ -299,17 +299,7 @@ class DeepCNN1DAutoencoder(nn.Module):
             'reconstruction_loss': recon_loss
         }
 
-
-# ============================================================================
-# Testing
-# ============================================================================
-
 if __name__ == '__main__':
-    print("="*80)
-    print("Testing 1D CNN Autoencoder Baseline")
-    print("="*80)
-
-    # Test standard autoencoder
     print("\n[1] Standard CNN1D Autoencoder")
     model = CNN1DAutoencoder(input_dim=1, seq_len=3600, latent_dim=128)
     print(f"  Total parameters: {sum(p.numel() for p in model.parameters()):,}")
