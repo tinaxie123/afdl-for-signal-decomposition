@@ -255,10 +255,6 @@ class AFDLTrainer:
         print(f"Best validation SNR: {self.best_val_snr:.2f} dB")
 
     def train(self, num_epochs: int):
-        """Main training loop"""
-        print("\n" + "="*80)
-        print("Starting training...")
-        print("="*80)
 
         for epoch in range(self.current_epoch, num_epochs):
             self.current_epoch = epoch
@@ -294,11 +290,6 @@ class AFDLTrainer:
 
             if (epoch + 1) % self.config['save_interval'] == 0 or is_best:
                 self.save_checkpoint(is_best=is_best)
-
-        print("\n" + "="*80)
-        print("Training completed!")
-        print("="*80)
-
         # Test with best model
         best_checkpoint = os.path.join(self.config['save_dir'], 'checkpoint_best.pth')
         if os.path.exists(best_checkpoint):
