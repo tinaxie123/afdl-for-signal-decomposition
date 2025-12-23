@@ -1,0 +1,14 @@
+# Testing Configuration for Signal Decomposition Model
+
+# Data Configuration
+test_data_path: 'data/processed/test.npy'
+
+# Testing Parameters
+batch_size: 32
+
+# System Configuration
+gpu: 0
+output_dir: 'results'
+
+# Random Seed
+seed: 42
