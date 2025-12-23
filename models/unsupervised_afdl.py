@@ -232,18 +232,7 @@ class UnsupervisedAFDL(AFDL):
             'sparsity_loss': sparsity_loss,
             'segmentation_loss': torch.tensor(0.0, device=x.device)  # Always 0
         }
-
-
-# ============================================================================
-# Testing
-# ============================================================================
-
 if __name__ == '__main__':
-    print("="*80)
-    print("Testing Unsupervised AFDL (Simplified)")
-    print("="*80)
-
-    # Create model
     model = UnsupervisedAFDL(
         input_dim=1,
         seq_len=3600,
@@ -280,8 +269,3 @@ if __name__ == '__main__':
     print(f"  Reconstruction loss: {losses['reconstruction_loss'].item():.4f}")
     print(f"  Sparsity loss: {losses['sparsity_loss'].item():.4f}")
     print(f"  Segmentation loss: {losses['segmentation_loss'].item():.4f} (should be 0.0)")
-
-    print("\n" + "="*80)
-    print("Unsupervised AFDL test passed!")
-    print("="*80)
-    print("\nKey feature: Segmentation uses local variance heuristic, NO supervision!")
