@@ -1,16 +1,3 @@
-"""
-Train Unsupervised AFDL for Rebuttal
-
-This script trains AFDL WITHOUT supervised segmentation, proving that
-the Micro-NN Functional Dictionary alone outperforms K-SVD.
-
-Target: SNR > 15.8 dB (K-SVD baseline)
-Best range: 16.0-17.0 dB
-
-Author: Haotong Xie
-Institution: Shanghai University of Finance and Economics
-"""
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -161,11 +148,6 @@ def main(args):
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, mode='max', factor=0.5, patience=10
     )
-
-    # Training loop
-    print(f"\nStarting training for {args.num_epochs} epochs...")
-    print("="*80)
-
     best_snr = 0
     best_epoch = 0
 
@@ -200,15 +182,6 @@ def main(args):
 
             # Update learning rate
             scheduler.step(val_metrics['snr'])
-
-            print("="*80)
-
-    # Final evaluation on test set
-    print("\n" + "="*80)
-    print("Final Evaluation on Test Set")
-    print("="*80)
-
-    # Load best model
     checkpoint_path = os.path.join(args.save_dir, 'unsupervised_afdl_best.pth')
     if os.path.exists(checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location=device)
@@ -227,36 +200,22 @@ def main(args):
 
     if test_metrics['snr'] > 15.8:
         improvement = ((test_metrics['snr'] - 15.8) / 15.8) * 100
-        print(f"\n[SUCCESS] ✓ Unsupervised AFDL outperforms K-SVD by {improvement:.1f}%!")
-        print(f"[SUCCESS] ✓ This proves the Micro-NN Dictionary's effectiveness WITHOUT supervision!")
     else:
         print(f"\n[WARNING] SNR below K-SVD baseline. May need more training or tuning.")
-
-    print("\n" + "="*80)
-    print("Training Complete!")
-    print("="*80)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train Unsupervised AFDL')
-
-    # Data arguments
     parser.add_argument('--data_path', type=str, default='./data/ptb_ecg_data',
                        help='Path to PTB-ECG data')
     parser.add_argument('--batch_size', type=int, default=16,
                        help='Batch size')
     parser.add_argument('--seq_len', type=int, default=3600,
                        help='Sequence length (10s at 360Hz)')
-
-    # Model arguments
     parser.add_argument('--dict_size', type=int, default=128,
                        help='Dictionary size')
     parser.add_argument('--num_heads', type=int, default=4,
                        help='Number of attention heads')
     parser.add_argument('--sparsity_weight', type=float, default=0.05,
                        help='Sparsity regularization weight')
-
-    # Training arguments
     parser.add_argument('--num_epochs', type=int, default=100,
                        help='Number of training epochs')
     parser.add_argument('--learning_rate', type=float, default=1e-3,
@@ -267,8 +226,6 @@ if __name__ == '__main__':
                        help='Directory to save checkpoints')
 
     args = parser.parse_args()
-
-    # Create save directory
     os.makedirs(args.save_dir, exist_ok=True)
 
     main(args)
