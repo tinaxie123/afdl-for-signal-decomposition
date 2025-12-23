@@ -237,6 +237,11 @@ results/
 *.jpg
 *.pdf
 
+# Allow assets folder images for README
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.pdf
+
 # System
 .DS_Store
 Thumbs.db

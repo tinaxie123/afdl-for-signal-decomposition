@@ -234,28 +234,28 @@ Results are saved to `results/` directory after training and evaluation.
 
 #### (a) Signal Reconstruction Comparison
 <p align="center">
-  <img src="results/figures/fig2a_reconstruction.png" width="95%">
+  <img src="assets/figures/fig2a_reconstruction.png" width="95%">
 </p>
 
 *Time-domain reconstruction comparison showing AFDL's superior preservation of ECG morphology. AFDL achieves SNR=17.5dB compared to K-SVD (15.8dB), ICA (14.9dB), and NMF (14.5dB).*
 
 #### (b) Reconstruction Error Analysis
 <p align="center">
-  <img src="results/figures/fig2b_error.png" width="95%">
+  <img src="assets/figures/fig2b_error.png" width="95%">
 </p>
 
 *Reconstruction error over time demonstrates AFDL's consistent low error (MAE=0.016mV) across all cardiac cycles, significantly outperforming baselines.*
 
 #### (c) Frequency Domain Analysis
 <p align="center">
-  <img src="results/figures/fig2c_frequency.png" width="95%">
+  <img src="assets/figures/fig2c_frequency.png" width="95%">
 </p>
 
 *Power spectral density comparison validates frequency content preservation in the critical ECG band (0.5-40Hz). AFDL maintains spectral fidelity while achieving superior SNR.*
 
 #### Combined Figure 2
 <p align="center">
-  <img src="results/figures/fig2_combined.png" width="95%">
+  <img src="assets/figures/fig2_combined.png" width="95%">
 </p>
 
 *Complete figure showing reconstruction comparison (a), error analysis (b), and frequency domain analysis (c) in one view.*
@@ -263,7 +263,7 @@ Results are saved to `results/` directory after training and evaluation.
 ### Performance Comparison
 
 <p align="center">
-  <img src="results/figures/performance_comparison.png" width="95%">
+  <img src="assets/figures/performance_comparison.png" width="95%">
 </p>
 
 *Bar chart comparing AFDL with baseline methods on SNR (higher is better) and PRD (lower is better). AFDL demonstrates superior performance with statistically significant improvements (**p < 0.001).*
