@@ -258,28 +258,5 @@ def test_all_baselines(signals: np.ndarray):
 
 if __name__ == '__main__':
     n_samples = 100
-    signal_length = 3600
-    t = np.linspace(0, 10, signal_length)
-
-    signals = np.zeros((n_samples, signal_length))
     for i in range(n_samples):
-        # Synthetic ECG
-        heart_rate = 60 + np.random.randn() * 5
-        freq = heart_rate / 60
-
-        # Components
-        signal = 0.2 * np.sin(2 * np.pi * freq * 0.8 * t)  # P-wave
-        signal += np.exp(-((t % (1/freq) - 0.35) ** 2) / 0.005)  # QRS
-        signal += 0.3 * np.exp(-((t % (1/freq) - 0.6) ** 2) / 0.02)  # T-wave
-        signal += 0.05 * np.random.randn(signal_length)  # Noise
-
-        signals[i] = signal
-
-    print(f"\nGenerated {n_samples} synthetic ECG signals ({signal_length} samples each)\n")
-
-    # Test all baselines
     results = test_all_baselines(signals)
-
-    print("\n" + "=" * 80)
-    print("All baseline methods tested successfully!")
-    print("=" * 80)
