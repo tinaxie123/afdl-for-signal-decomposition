@@ -1,13 +1,12 @@
 # Adaptive Functional Dictionary Learning (AFDL)
 
-Official PyTorch implementation of **"Beyond Static Bases: Adaptive Functional Dictionary Learning for Interpretable Signal Decomposition"** (ICASSP 2026).
+Official PyTorch implementation of **"Beyond Static Bases: Adaptive Functional Dictionary Learning for Interpretable Signal Decomposition"**.
 
 ## Paper Information
 
 - **Title**: Beyond Static Bases: Adaptive Functional Dictionary Learning for Interpretable Signal Decomposition
 - **Author**: Haotong Xie
 - **Institution**: Shanghai University of Finance and Economics, Shanghai, China
-- **Conference**: ICASSP 2026
 
 ## Abstract
 
@@ -147,18 +146,7 @@ python train_afdl.py \
 python train_afdl.py --resume ./checkpoints/checkpoint_latest.pth
 ```
 
-## Pretrained Models
 
-Download pretrained models from [Link to be added]:
-
-| Model | Dataset | Metric | Score | Download |
-|-------|---------|--------|-------|----------|
-| Model-A | Dataset-1 | SNR | XX.XX dB | [link] |
-| Model-B | Dataset-2 | MSE | X.XXXX | [link] |
-
-Place downloaded models in `pretrained/` directory.
-
-## Testing / Inference
 
 ### Run inference with trained model:
 
@@ -287,13 +275,7 @@ Results are saved to `results/` directory after training and evaluation.
 If you find this work useful, please cite:
 
 ```bibtex
-@inproceedings{xie2026afdl,
-  title={Beyond Static Bases: Adaptive Functional Dictionary Learning for Interpretable Signal Decomposition},
-  author={Xie, Haotong},
-  booktitle={IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-  year={2026},
-  organization={IEEE}
-}
+
 ```
 
 ## Key Features
@@ -337,18 +319,6 @@ This implementation is for research purposes only. See LICENSE file for details.
 
 For questions or issues, please open an issue on GitHub or contact:
 - **Haotong Xie** - Shanghai University of Finance and Economics
-
----
-
-**Implementation Status**: ✅ Complete
-- [x] Hierarchical Functional Dictionary with 5 basis function types
-- [x] Multi-modal Context Encoder (Conv1D + BiLSTM)
-- [x] Signal Segmentation Network
-- [x] Brain-Inspired Basis Function Selection
-- [x] Attention Modulator with multi-head parameter prediction
-- [x] Complete training pipeline with evaluation metrics
-- [x] Data loader for PTB-ECG dataset
-- [x] Comprehensive documentation
 
 **Files**:
 - `models/afdl.py`: Complete AFDL implementation (4.7M parameters)
